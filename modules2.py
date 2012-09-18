@@ -15,13 +15,15 @@ env = Environment(loader=FileSystemLoader('templates'),
 template = env.get_template('latex.j2')
 
 def get_docstring(filename):
+    """
+    Search for assignment of the DOCUMENTATION variable in the given file.
+    Parse that from YAML and return the YAML doc or None.
+    """
 
     doc = None
 
-    # DOCUMENATION = """ """ MUST be first docstring/assignment in module
-
     try:
-        # Thank you, Habbie, for this bit of code :)
+        # Thank you, Habbie, for this bit of code :-)
         M = ast.parse(''.join(open(filename)))
         for child in M.body:
             if isinstance(child, ast.Assign):
