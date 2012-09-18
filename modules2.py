@@ -35,6 +35,7 @@ dir = '/Users/jpm/Auto/pubgit/ansible/ansible/library'
 
 for module in os.listdir(dir):
     fname = os.path.join(dir, module)
+    extra = os.path.join("inc", "%s.tex" % module)
 
     print "%% modules2.py ---> %s" % fname
 
@@ -47,5 +48,12 @@ for module in os.listdir(dir):
         d['docuri'] = d['module'].replace('_', '-')
 
         # print json.dumps(d, indent=4)
+
+
+        if os.path.exists(extra):
+            f = open(extra)
+            extradata = f.read()
+            f.close()
+            d['extradata'] = extradata
 
         print template.render(d)

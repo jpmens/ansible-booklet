@@ -35,3 +35,11 @@
   	\end{extymeta}
   {% endfor -%}
 {% endif -%}
+
+{% if extradata is defined -%}
+%--- BEGIN-EXTRADATA
+\begin{extymeta}
+@{ extradata -}@
+\end{extymeta}
+%----- END-EXTRADATA
+{% endif -%}
