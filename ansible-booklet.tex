@@ -206,7 +206,7 @@
  \chead[]{}
  \ohead[]{\small\C{\{"pushed"\,:\,"\today{}"\}}}
 %%% Unten: Links, Mitte, Rechts
- \ifoot[]{\vspace{-3pt}Ansible-Refcard}
+ \ifoot[]{\vspace{-3pt}\href{http://ansible.github.com/}{ansible.github.com}}
  \cfoot[]{}
  \ofoot[]{\vspace{-3pt}\copyright 2012 \href{mailto:jpmens@gmail.com}{Jan-Piet Mens}}
 %%% }}}
@@ -344,84 +344,10 @@ ansible webs -m \B{copy} -a "src=/tmp/f dest=/etc/conf"
 \input{modules}
 
 %-----------------------------------------------------------------------
+\input{playbooks}
 
-\subsection*{Playbooks}
-
-Simply put, \href{http://ansible.github.com/playbooks.html}{Playbooks} are the basis for a really simple configuration management and multi-machine deployment system, unlike any that already exist, and one that is very well suited to deploying complex applications. Playbooks can declare configurations, but they can also orchestrate steps of any manual ordered process, even as different steps must bounce back and forth between sets of machines in particular orders. They can launch tasks synchronously or asynchronously. Playbooks are expressed in YAML format and have a minimum of syntax. Each playbook is composed of one or more \I{plays} in a list. Here's a playbook that contains just one play:
-
-\begin{extymeta}
----
-- hosts: devservers
-  vars:
-    http\_port: 80
-    \B{conf}: httpd.j2
-  user: root
-  tasks:
-  - name: ensure apache is at the latest version
-    action: yum pkg=httpd state=latest
-  - name: write the apache config file
-    action: template src=/srv/\B{\$\{conf\}} dest=/etc/httpd.conf
-    notify:
-    - restart apache
-  - name: ensure apache is running
-    action: service name=httpd state=started
-  handlers:
-    - name: restart apache
-      action: service name=apache state=restarted
-\end{extymeta}
-
-\begin{extymeta}
-ansible-playbook -u jpm mini.yaml
-\end{extymeta}
-
-Use the \C{--verbose} flag for more information.
-
-
-\begin{extymeta}
-only_if: "not '${ansible_cmdline.BOOT_IMAGE}'.startswith('$')"
-\end{extymeta}
-
-
-\subsection*{Handlers \& Notification}
-
-Modules are written to be \I{idempotent} and can relay when they have made a
-change on the remote system. Playbooks recognize this and have a basic event
-system that can be used to respond to change.  These \I{notify} actions are
-triggered at the end of each \I{play} in a playbook, and trigger only once
-each. For instance, multiple resources may indicate that apache needs to be
-restarted, but apache will only be bounced once. Here's an example of
-restarting two services when the contents of a file change, but only if the
-file changes:
-
-\begin{extymeta}
-- name: template configuration file
-  action: template src=template.j2 dest=/etc/foo.conf
-  \B{notify}:
-     - restart memcached
-     - restart apache
-\end{extymeta}
-
-The things listed in the \I{notify} section of a task are called \I{handlers}. Handlers are lists of tasks, not really any different from regular tasks, that are referenced by name. Handlers are what notifiers notify. If nothing notifies a handler, it will not run. Regardless of how many things notify a handler, it will run only once, after all of the tasks complete in a particular play. Handlers are best used to restart services and trigger reboots. You probably won¿t need them for much else. Here¿s an example handlers section:
-
-\begin{extymeta}
-handlers:
-    - name: restart memcached
-      action: service name=memcached state=restarted
-    - name: restart apache
-      action: service name=apache state=restarted
-\end{extymeta}
-
-Notify handlers are always run in the order written.
-
-\subsection*{Templates}
-
-FIXME: short description of Jinja2 templates with one or two short examples using some vars from playbook and \M{setup}.
-
-show:
-	expansion
-	if, else, endif
-	switch / case ????
-	loops
+%-----------------------------------------------------------------------
+\input{templates}
 
 
 \subsection*{Delegation}
@@ -473,14 +399,10 @@ http://ansible.github.com/examples.html\#configuration-defaults
 
 \end{xlist}
 
-\subsection*{Extending Ansible}
-
-\subsubsection*{Your own modules}
-
-\subsubsection*{Callback plugins}
+%-----------------------------------------------------------------------
+\input{extending}
 
 %-----------------------------------------------------------------------
-\subsection*{Pull mode}
 \input{pullmode}
 
 
