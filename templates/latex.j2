@@ -21,12 +21,18 @@
 		(default \C{@{ v['default'] }@})
 		{% endif -%}
 		{% if v['version_added'] is defined -%}
-		*** New in VERSION @{ v['version_added'] }@ 
+		(\I{* version @{ v['version_added'] }@})
 		{% endif -%}
      {% endfor -%}
   {% endfor -%}
 \end{xlist}
 {% endif -%}
+
+{% if notes is defined -%}
+\B{Notes}: \I{@{ notes }@}
+{% endif -%}
+
+{#-------------------------------------------
 
 {% if examples is defined -%}
   {% for e in examples -%}
@@ -35,6 +41,7 @@
   	\end{extymeta}
   {% endfor -%}
 {% endif -%}
+----------------------------------- #}
 
 {% if extradata is defined -%}
 %--- BEGIN-EXTRADATA
