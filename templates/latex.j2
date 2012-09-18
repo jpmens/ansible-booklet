@@ -1,0 +1,37 @@
+%--- @{ module | upper }@  ----  from @{ filename }@ ---
+
+%: -- module header
+\mods{@{module}@}{@{docuri}@}{@{description}@}
+
+%: -- module options
+
+{% if options is defined -%}
+\begin{xlist}{abcdefghijklmno}
+  {% for o in options -%}
+     {% for opt, v  in o.iteritems()  -%}
+
+  	{% if v['required'] -%}
+		\item[\man\,\C{@{ opt }@}]
+	{% else -%}
+		\item[\opt\,\C{@{ opt }@}]
+	{% endif -%}
+
+		@{ v.description }@
+		{% if v['default'] -%}
+		(default \C{@{ v['default'] }@})
+		{% endif -%}
+		{% if v['version_added'] is defined -%}
+		*** New in VERSION @{ v['version_added'] }@ 
+		{% endif -%}
+     {% endfor -%}
+  {% endfor -%}
+\end{xlist}
+{% endif -%}
+
+{% if examples is defined -%}
+  {% for e in examples -%}
+  	\begin{extymeta}
+@{ e['code'] }@
+  	\end{extymeta}
+  {% endfor -%}
+{% endif -%}
