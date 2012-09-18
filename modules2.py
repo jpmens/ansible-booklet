@@ -60,19 +60,19 @@ for module in os.listdir(dir):
 
     doc = get_docstring(fname)
     if not doc is None:
-        d = doc[module]
+        # d = doc[module]
 
-        d['module'] = module
-        d['filename'] = fname
-        d['docuri'] = d['module'].replace('_', '-')
+        # d['module'] = module
+        doc['filename'] = fname
+        doc['docuri'] = doc['module'].replace('_', '-')
 
-        # print json.dumps(d, indent=4)
+        # print json.dumps(doc, indent=4)
 
 
         if os.path.exists(extra):
             f = open(extra)
             extradata = f.read()
             f.close()
-            d['extradata'] = extradata
+            doc['extradata'] = extradata
 
-        print template.render(d)
+        print template.render(doc)
