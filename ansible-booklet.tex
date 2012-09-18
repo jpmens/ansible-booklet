@@ -42,6 +42,7 @@
 %\usepackage{amsmath,amssymb,amstext}% Mathematische Symbole
 \usepackage{url}                    % Darstellung von URLs
 %\usepackage{calc}
+\usepackage[iso,german]{isodate}
 \usepackage{fancyvrb}
 
 %%% Optional, je nach Dokument
@@ -186,7 +187,7 @@
 %%% Oben: Links, Mitte, Rechts
  \ihead[]{{\Huge Ansible-Refcard}}
  \chead[]{}
- \ohead[]{configured: \today}
+ \ohead[]{\small\C{\{"pushed"\,:\,"\today{}"\}}}
 %%% Unten: Links, Mitte, Rechts
  \ifoot[]{\vspace{-3pt}Ansible-Refcard}
  \cfoot[]{}
