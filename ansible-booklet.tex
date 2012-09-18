@@ -58,7 +58,7 @@
 % \usepackage{listings}             % Quelltext-Listings
 % \usepackage{units}                % Technische Units
 % \usepackage{psfrag}               % Ersetzts PS-Schriften
-% \usepackage{color}                % Farben in LaTeX
+\usepackage{color}                % Farben in LaTeX
 % \usepackage{floatflt}             % Textumflossene Bilder...
 % \usepackage{picins}               % Textumflossene Bilder
 % \usepackage{textcomp}             % Spezielle Zeichen
@@ -74,6 +74,7 @@
 \usepackage[pdftex]{graphicx}
 \DeclareGraphicsExtensions{.pdf}
 \pdfcompresslevel=9
+\definecolor{light-gray}{gray}{0.1}%JPMENS
 \usepackage[%
   pdftex=true,
   backref=true,
@@ -83,7 +84,8 @@
   linktocpage=true,
   bookmarksopen=false,
   bookmarksnumbered=false,
-  pdfpagemode=None
+  pdfpagemode=None,
+  urlcolor=light-gray
 ]{hyperref}
 %%% }}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -134,6 +136,7 @@
 %% TEST
 \newcommand{\man}{$\bullet$}
 \newcommand{\opt}{$\circ$}
+\newcommand{\ansible}{\I{Ansible}}%
 
 %%\newcommand{\modbeginhead}{
 %%  \vspace{6pt}
@@ -470,6 +473,11 @@ http://ansible.github.com/examples.html\#configuration-defaults
 \subsubsection*{Your own modules}
 
 \subsubsection*{Callback plugins}
+
+%-----------------------------------------------------------------------
+\subsection*{Pull mode}
+\input{pullmode}
+
 
 \subsection*{Tips and tricks: fun with Ansible}
 

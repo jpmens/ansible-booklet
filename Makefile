@@ -2,7 +2,7 @@ FILE=ansible-booklet
 
 all: $(FILE).pdf
 
-$(FILE).pdf: $(FILE).tex modules.tex
+$(FILE).pdf: $(FILE).tex modules.tex pullmode.tex
 	pdflatex $(FILE).tex
 	pdflatex $(FILE).tex
 
