@@ -60,9 +60,7 @@ for module in os.listdir(dir):
 
     doc = get_docstring(fname)
     if not doc is None:
-        # d = doc[module]
-
-        # d['module'] = module
+        
         doc['filename'] = fname
         doc['docuri'] = doc['module'].replace('_', '-')
 
