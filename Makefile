@@ -14,7 +14,7 @@ $(FILE).pdf: $(FILE).tex $(TEXFILES)
 	pdflatex $(FILE).tex
 
 modules: 
-	./modules2.py > modules.tex
+	./mofo.py > modules.tex
 
 clean:
 	rm -f $(FILE).aux $(FILE).log $(FILE).out modules.aux modules.log 
