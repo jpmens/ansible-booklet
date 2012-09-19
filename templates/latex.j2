@@ -4,7 +4,10 @@
 \mods{@{module}@}{@{docuri}@}{
 		{% for desc in description -%}
 		@{ desc | jpfunc }@ 
-		{% endfor %}
+		{% endfor -%}
+		{% if version_added is defined -%}
+		(\I{* new in version @{ version_added }@})
+		{% endif -%}
 		}
 
 %: -- module options
