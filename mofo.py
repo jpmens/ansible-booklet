@@ -26,6 +26,8 @@ import ast
 from jinja2 import Environment, FileSystemLoader
 import re
 import argparse
+import time
+import datetime
 
 MODULEDIR="/Users/jpm/Auto/pubgit/ansible/ansible/library"
 
@@ -94,7 +96,7 @@ def get_docstring(filename):
                 if 'DOCUMENTATION' in (t.id for t in child.targets):
                     doc = yaml.load(child.value.s)
     except:
-        pass
+        raise
     return doc
 
 def main():
@@ -169,6 +171,7 @@ def main():
             
             doc['filename'] = fname
             doc['docuri'] = doc['module'].replace('_', '-')
+            doc['now_date']     = datetime.date.today()
 
             if args.verbose:
                 print json.dumps(doc, indent=4)
