@@ -3,7 +3,7 @@
 %: -- module header
 \mods{@{module}@}{@{docuri}@}{
 		{% for desc in description -%}
-		@{ desc }@ 
+		@{ desc | jpfunc }@ 
 		{% endfor %}
 		}
 
@@ -22,7 +22,7 @@
 
 		{# -------- option description ----------#}
 		{% for desc in v.description -%}
-		@{ desc }@ 
+		@{ desc | jpfunc }@ 
 		{% endfor %}
 		{% if v['choices'] -%}
 		    \B{Choices}:\,
@@ -43,7 +43,7 @@
 {% if notes is defined -%}
 		{# -------- notes ----------#}
 		{% for note in notes -%}
-		\I{@{ note }@} 
+		\I{@{ note | jpfunc }@} 
 		{% endfor %}
 {% endif -%}
 
