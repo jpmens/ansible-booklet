@@ -8,6 +8,7 @@ TEXFILES= ansible-booklet.tex \
 
 all: $(FILE).pdf
 
+
 $(FILE).pdf: $(FILE).tex $(TEXFILES)
 	pdflatex $(FILE).tex
 	pdflatex $(FILE).tex

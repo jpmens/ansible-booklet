@@ -1,7 +1,11 @@
 %--- @{ module | upper }@  ----  from @{ filename }@ ---
 
 %: -- module header
-\mods{@{module}@}{@{docuri}@}{@{description}@}
+\mods{@{module}@}{@{docuri}@}{
+		{% for desc in description -%}
+		@{ desc }@ 
+		{% endfor %}
+		}
 
 %: -- module options
 
@@ -16,7 +20,10 @@
 		\item[\opt\,\C{@{ opt }@}]
 	{% endif -%}
 
-		@{ v.description }@
+		{# -------- option description ----------#}
+		{% for desc in v.description -%}
+		@{ desc }@ 
+		{% endfor %}
 		{% if v['choices'] -%}
 		    \B{Choices}:\,
 		    {% for choice in v['choices'] -%}\C{@{ choice }@}{% if not loop.last %},{% else %}.{% endif %}
@@ -34,7 +41,10 @@
 {% endif -%}
 
 {% if notes is defined -%}
-\B{Notes}: \I{@{ notes }@}
+		{# -------- notes ----------#}
+		{% for note in notes -%}
+		\I{@{ note }@} 
+		{% endfor %}
 {% endif -%}
 
 {#-------------------------------------------
