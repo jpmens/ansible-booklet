@@ -1,6 +1,15 @@
 \subsection*{Playbooks}
 
-Simply put, \href{http://ansible.github.com/playbooks.html}{Playbooks} are the basis for a really simple configuration management and multi-machine deployment system, unlike any that already exist, and one that is very well suited to deploying complex applications. Playbooks can declare configurations, but they can also orchestrate steps of any manual ordered process, even as different steps must bounce back and forth between sets of machines in particular orders. They can launch tasks synchronously or asynchronously. Playbooks are expressed in YAML format and have a minimum of syntax. Each playbook is composed of one or more \I{plays} in a list. Here's a playbook that contains just one play:
+Simply put, \href{http://ansible.github.com/playbooks.html}{Playbooks} are the
+basis for a really simple configuration management and multi-machine deployment
+system, unlike any that already exist, and one that is very well suited to
+deploying complex applications. Playbooks can declare configurations, but they
+can also orchestrate steps of any manual ordered process, even as different
+steps must bounce back and forth between sets of machines in particular orders.
+They can launch tasks synchronously or asynchronously. Playbooks are expressed
+in YAML\footnote{\url{http://www.yaml.org/}} format and have a minimum of syntax. (Tip: use the \I{Online YAML Parser}\footnote{\url{http://yaml-online-parser.appspot.com/}} to experiment.)
+Each playbook is composed of one
+or more \I{plays} in a list. Here's a playbook that contains just one play:
 
 \begin{extymeta}
 ---

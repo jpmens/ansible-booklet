@@ -1,6 +1,102 @@
 \subsection*{Extending Ansible}
 
+\ansible{} is extensible: you can use the \ansible{} Python API to control
+nodes, you can extend Ansible to respond to various python events, and you can
+plug in inventory data from external data sources. \ansible{} is written in its
+own API so you have a considerable amount of power across the
+board\footnote{\url{http://ansible.github.com/api.html}}.
+
 \subsubsection*{Your own modules}
+
+\ansible{} modules are reusable units which can be used by the \ansible{} API,
+or by the \C{ansible} or \C{ansible-playbook} programs. Modules can be written
+in any language supported by \I{nodes} (e.g. shell
+scripts\footnote{\url{http://mens.de/:/ansshell}}) and are found in the path
+specified by \C{ANSIBLE_LIBRARY_PATH} or the \C{--module-path} command-line
+option\footnote{\url{http://ansible.github.com/moduledev.html}}.
+
+The following listing illustrates what an \ansible{} module looks like in Python;
+it accepts a single parameter (\C{name}) with the name of a file on a node for
+which the file size should be retrieved:
+
+\begin{extymeta}
+#!/usr/bin/python
+import os
+
+DOCUMENTATION = '''
+---
+module: mini
+short_description: Determine file size of remote file
+description:
+     - Determines the size of a specified file.
+version_added: "0.0"
+options:
+  - name:
+      description:
+        - Absolute path to the file name on the remote node.
+      required: true
+      default: null
+      aliases: [dest, destfile]
+'''
+
+def main():
+    module = AnsibleModule(
+        argument_spec = dict(
+            name=dict(required=True, aliases=['dest', 'destfile']),
+        ),
+    )
+
+    params = module.params
+    filename = params['name']
+
+    try:
+        stat = os.stat(filename)
+    except:
+        module.fail_json(msg="Can't stat file: %s" % filename)
+
+    changed = False
+    msg = "Filename %s has size %s" % (filename, stat.st_size)
+    module.exit_json(changed=changed, msg=msg)
+
+# this is magic, see lib/ansible/module_common.py
+#<<INCLUDE_ANSIBLE_MODULE_COMMON>>
+
+main()
+\end{extymeta}
+
+Use this module in a playbook or from the command-line:
+
+\begin{extymeta}
+ansible 127.0.0.1 -c local \B{-m mini} -a dest=/tmp/xx
+127.0.0.1 | success >> \{
+    "changed": false, 
+    "msg": "Filename /tmp/xx has size 1233"
+\}
+\end{extymeta}
+
+You should look at some of the modules in \ansible{}'s \C{library/*} for
+inspiration before writing your own.
+
+Modules you write can also return \I{facts} like the \M{setup} module does, but
+you have to call your modules explicitly, whereas \M{setup} is invoked
+automatically from a playbook. (Fig.~\ref{factslocal}) A fact-gathering module
+can be written as trivially as this example in a shell script\footnote{\url{}}.
+
+\begin{extymeta}
+#!/bin/sh
+
+COUNT=`who | wc -l`
+cat <<EOF
+\{
+   "ansible_facts" : \{
+      "users_logged_in" : $COUNT
+    \}
+\}
+EOF
+\end{extymeta}
+
+
+\bild{250pt}{art/ansible-facts-local.png}{Ansible copies modules to nodes}{factslocal}
 
 \subsubsection*{Callback plugins}
 

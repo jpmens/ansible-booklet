@@ -332,7 +332,16 @@ That last entry has what is called a \I{host var}; ignore that for now.
 
 \subsection*{Modules}
 
-Ansible ships with a number of modules (called the "module library") that can be executed directly on remote hosts or through Playbooks. Users can also write their own modules. These modules can control system resources, like services, packages, or files (anything really), or handle executing system commands. The following is a list of modules in the core library with supported options (\man{} is mandatory, \opt{} optional). (If you're viewing this in a PDF reader, click on the module name to go to the official module documentation at \href{http://ansible.github.com/}{ansible.github.com}.)
+\ansible{} ships with a number of
+modules\footnote{\url{http://ansible.github.com/modules.html}} (called the
+"module library") that can be executed directly on remote hosts or through
+Playbooks. Users can also write their own modules. These modules can control
+system resources, like services, packages, or files (anything really), or
+handle executing system commands. The following is a list of modules in the
+core library with supported options (\man{} is mandatory, \opt{} optional). (If
+you're viewing this in a PDF reader, click on the module name for its
+official documentation.)
+
 
 \begin{extymeta}
 ansible 192.168.8.9 -m \B{ping}
@@ -359,7 +368,6 @@ FIXME: what delegation is. mention localaction needs SSH to localhost
 refer to \M{setup}; maybe show short module example?
 
 
-\bild{250pt}{art/ansible-facts-local.png}{That's a foo\ldots}{factslocal}
 
 \subsection*{Variables}
 
