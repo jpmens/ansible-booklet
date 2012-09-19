@@ -2,6 +2,20 @@
 
 **Warning** This is a work in progress and is far from complete!
 
+## mofo
+
+The MOdule FOrmatter. :-)
+
+### Create man pages
+
+* Of a single module
+
+		./mofo -t manpage -m get_url
+
+* Of all modules, in `directory/*.man`
+
+		./mofo -t manpage -o directory
+
 
 ## Credits
 
