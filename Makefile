@@ -13,7 +13,7 @@ $(FILE).pdf: $(FILE).tex $(TEXFILES)
 	pdflatex $(FILE).tex
 	pdflatex $(FILE).tex
 
-modules.tex: modules2.py Makefile inc/*.tex templates/latex.j2
+modules: 
 	./modules2.py > modules.tex
 
 clean:
