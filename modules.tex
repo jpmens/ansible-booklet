@@ -170,3 +170,52 @@ ansible host -m \B{raw} -a "yum -y install python-simplejson"
 % modules2.py ---> /Users/jpm/Auto/pubgit/ansible/ansible/library/virt
 % modules2.py ---> /Users/jpm/Auto/pubgit/ansible/ansible/library/wait_for
 % modules2.py ---> /Users/jpm/Auto/pubgit/ansible/ansible/library/yum
+% modules2.py ---> /Users/jpm/Auto/pubgit/ansible/ansible/library/lineinfile
+%--- LINEINFILE  ----  from /Users/jpm/Auto/pubgit/ansible/ansible/library/lineinfile ---
+
+% modules2.py ---> /Users/jpm/Auto/pubgit/ansible/ansible/library/lineinfile
+%--- LINEINFILE  ----  from /Users/jpm/Auto/pubgit/ansible/ansible/library/lineinfile ---
+
+% modules2.py ---> /Users/jpm/Auto/pubgit/ansible/ansible/library/lineinfile
+%--- LINEINFILE  ----  from /Users/jpm/Auto/pubgit/ansible/ansible/library/lineinfile ---
+
+%: -- module header
+\mods{lineinfile}{lineinfile}{
+		This module will search a file for a line, and ensure that it is present or absent. 
+		This is primarily useful when you want to change a single line in a file only. For other cases, see the \M{copy} or \M{template} modules. 
+		(\I{* new in version 0.7})
+		}
+
+%: -- module options
+
+\begin{xlist}{abcdefghijklmno}
+  \item[\man\,\C{name}]
+	The file to modify 
+		
+		\item[\man\,\C{regexp}]
+	The regular expression to look for in the file. For \I{state=present}, the pattern to replace. For \I{state=absent}, the pattern of the line to remove. 
+		
+		\item[\opt\,\C{state}]
+	Whether the line should be there or not. 
+		
+		\B{Choices}:\,
+		    \C{present},
+		    \C{absent}.
+		    (default \C{present})
+		\item[\opt\,\C{line}]
+	Required for \I{state=present}. The line to insert/replace into the file. Must match the value given to \C{regexp}. 
+		
+		\item[\opt\,\C{insertafter}]
+	Used with \I{state=present}. If specified, the line will be inserted after the specified regular expression. Two special values are available; \C{BOF} for inserting the line at the beginning of the file, and \C{EOF} for inserting the line at the end of the file. 
+		
+		\B{Choices}:\,
+		    \C{BOF},
+		    \C{EOF}.
+		    (default \C{EOF})
+		\item[\opt\,\C{backup}]
+	Create a backup file including the timestamp information so you can get the original file back if you somehow clobbered it incorrectly. 
+		
+		\end{xlist}
+
+
+

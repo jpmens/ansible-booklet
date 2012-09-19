@@ -91,6 +91,7 @@
   pdfpagemode=None,
   linkcolor=black,
   urlcolor=light-gray
+%  urlcolor=blue
 ]{hyperref}
 %%% }}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -283,25 +284,25 @@
 
 \subsection*{Ansible}
 
-Ansible, created by  Michael DeHaan, is a radically simple model-driven configuration management, deployment, and command execution framework. Other than Python 2.6 and a working SSH infrastructure, Ansible requires no setup, no daemons, no PKI, no nothing (Fig.~\ref{ansiblearchitecture}). 
+\ansible{}, created by  Michael DeHaan, is a radically simple model-driven configuration management, deployment, and command execution framework. Other than Python 2.6 and a working SSH infrastructure, \ansible{} requires no setup, no daemons, no PKI, no nothing (Fig.~\ref{ansiblearchitecture}). 
 
 \bild{250pt}{art/ansible.png}{Ansible architecture}{ansiblearchitecture}
 
 \subsection*{Problems?}
 
-If you need help or want to report a problem Ansible has a mailing-list
+If you need help or want to report a problem \ansible{} has a mailing-list
 at \href{http://groups.google.com/group/ansible-project}{groups.google.com/group/ansible-project}. The latest and greatest code is on \href{https://github.com/ansible/ansible}{github.com/ansible/ansible}
 where you can track issues and submit ideas. There are also lots of people
 willing to assist on IRC: log in to \C{\#ansible} on FreeNode.
 
 \subsection*{Getting started}
 
-In this document we'll call the machine you run Ansible on (i.e. the machine from which you deploy) the \master{}; machines onto which you deploy (i.e. your clients), we'll call \nodes{}. On the \master{} you don't necessarily require \C{root} permission: Ansible can run as any user. Similarly, on \nodes{} you don't need root permissions either (well, maybe not): Ansible can connect to \nodes{} as a "normal" user and then (if required) \C{sudo} to root.
+In this document we'll call the machine you run \ansible{} on (i.e. the machine from which you deploy) the \master{}; machines onto which you deploy (i.e. your clients), we'll call \nodes{}. On the \master{} you don't necessarily require \C{root} permission: \ansible{} can run as any user. Similarly, on \nodes{} you don't need root permissions either (well, maybe not): \ansible{} can connect to \nodes{} as a "normal" user and then (if required) \C{sudo} to root.
 
-Download Ansible and unpack. You don't need to install it ... running from a git checkout is fine.
+Download \ansible{} and unpack. You don't need to install it ... running from a git checkout is fine.
 Create your \I{inventory} file and test: See the section on SSH for setting up SSH.
 
-Ansible requires Python 2.6 though nodes only 2.4
+\ansible{} requires Python 2.6 though nodes only 2.4
 
 
 
@@ -312,7 +313,7 @@ Ansible requires Python 2.6 though nodes only 2.4
 
 \subsection*{Inventory}
 
-\small{Ansible works against multiple systems in your infrastructure at the same time. It does this by selecting portions of systems listed in the inventory file, which defaults to \C{/etc/ansible/hosts}.}
+\small{\ansible{} works against multiple systems in your infrastructure at the same time. It does this by selecting portions of systems listed in the inventory file, which defaults to \C{/etc/ansible/hosts}.}
 
 \begin{extymeta}
 localhost
@@ -335,13 +336,15 @@ That last entry has what is called a \I{host var}; ignore that for now.
 \ansible{} ships with a number of
 modules\footnote{\url{http://ansible.github.com/modules.html}} (called the
 "module library") that can be executed directly on remote hosts or through
-Playbooks. Users can also write their own modules. These modules can control
-system resources, like services, packages, or files (anything really), or
-handle executing system commands. The following is a list of modules in the
-core library with supported options (\man{} is mandatory, \opt{} optional). (If
-you're viewing this in a PDF reader, click on the module name for its
-official documentation.)
+Playbooks (Fig.~\ref{factslocal}).
 
+\bild{250pt}{art/ansible-facts-local.png}{Ansible copies modules to nodes for execution}{factslocal}
+
+These modules can control system resources, like services, packages, or files
+(anything really), or handle executing system commands. The following is a list
+of modules in the core library with supported options (\man{} is mandatory,
+\opt{} optional). (If you're viewing this in a PDF reader, click on the module
+name for its official documentation.)
 
 \begin{extymeta}
 ansible 192.168.8.9 -m \B{ping}
@@ -379,7 +382,7 @@ refer to \M{setup}; maybe show short module example?
 \subsection*{SSH}
 
 Paramiko is a native python implementation of the SSH protocol. It's
-the default transport method used by Ansible, this method should work
+the default transport method used by \ansible{}, this method should work
 for 99\% of people by default. The native ssh transport method is
 necessary in more complicated infrastructures where support for
 bastion ('proxy') hosts is required, or if GSSAPI (kerberos) is used
@@ -420,7 +423,7 @@ http://ansible.github.com/examples.html\#configuration-defaults
 
     \item[1.]
 
-	If your \I{nodes} have a version of Python which doesn't meet Ansible's
+	If your \I{nodes} have a version of Python which doesn't meet \ansible{}'s
 	requirements, install Python non-destructively in, say,
 	\C{/usr/local/Python}, and configure your inventory to use that path on
 	nodes (e.g. with a group variable).
