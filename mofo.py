@@ -60,6 +60,7 @@ options:
         - The foo to do on M(module) but be careful of lorem ipsum
 examples:
    - code: foo dest=/tmp/jj remove=maybe
+     description: Possibly removes the specified file
    - code: foo dest=/dev/null 
 '''
 
@@ -137,6 +138,11 @@ def main():
 
     p = argparse.ArgumentParser(description="Convert Ansible module DOCUMENTATION strings to other formats")
 
+    p.add_argument("-A", "--ansible-version",
+            action="store",
+            dest="ansible_version",
+            default="unknown",
+            help="Ansible version number")
     p.add_argument("-M", "--module-dir",
             action="store",
             dest="module_dir",
@@ -196,7 +202,7 @@ def main():
     if args.type == 'man':
         env.filters['jpfunc'] = man_ify
         template = env.get_template('man.j2')
-        outputname = "%s.man"
+        outputname = "ansible.%s.man"
 
     for module in os.listdir(args.module_dir):
         if len(args.module_list):
@@ -215,6 +221,7 @@ def main():
             doc['filename'] = fname
             doc['docuri'] = doc['module'].replace('_', '-')
             doc['now_date']     = datetime.date.today().strftime('%Y-%m-%d')
+            doc['ansible_version']  = args.ansible_version
 
             if args.verbose:
                 print json.dumps(doc, indent=4)
@@ -261,6 +268,7 @@ def boilerplate():
     print """
 DOCUMENTATION = '''
 %s
+'''
 """[1:-1] % (BOILERPLATE.replace('AUTHORNAME', author) [1:-1] )
 
 if __name__ == '__main__':
