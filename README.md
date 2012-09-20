@@ -2,6 +2,8 @@
 
 **Warning** This is a work in progress and is far from complete!
 
+The booklet is [here](https://github.com/downloads/jpmens/ansible-booklet/ansible-booklet.pdf)
+
 ## mofo
 
 The MOdule FOrmatter. :-)
