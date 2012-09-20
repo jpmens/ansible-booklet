@@ -28,8 +28,40 @@ import re
 import argparse
 import time
 import datetime
+import subprocess
 
 MODULEDIR="/Users/jpm/Auto/pubgit/ansible/ansible/library"
+
+BOILERPLATE = '''
+---
+module: foo
+author: AUTHORNAME
+short_description: A short description, think title
+description:
+  - First paragraph explains what the module does. More paragraphs can
+    be added.
+  - Second para of description. You can use B(bold), I(italic), and
+    C(constant-width). To refer to another M(module) use that, and
+    U(url) exists too.
+version_added: "0.x"
+options:
+  - dest:
+      required: true
+      description:
+        - What does this option do, and bla bla bla
+        - More than one paragraph allowed here as well. Formatting
+          with B(bold), etc. work too.
+  - remove:
+      required: false
+      choices: [ yes, no, maybe, perhaps ]
+      default: "maybe"
+      aliases: [ kill, killme, delete ]
+      description:
+        - The foo to do on M(module) but be careful of lorem ipsum
+examples:
+   - code: foo dest=/tmp/jj remove=maybe
+   - code: foo dest=/dev/null 
+'''
 
 def clever():
     return "Hello WORLD"
@@ -62,7 +94,7 @@ def html_ify(text):
 
     return t
 
-def manpage_ify(text):
+def man_ify(text):
 
     t = _ITALIC.sub(r'\\fI' + r"\1" + r"\\fR", text)
     t = _BOLD.sub(r'\\fB' + r"\1" + r"\\fR", t)
@@ -80,7 +112,7 @@ env = Environment(loader=FileSystemLoader('templates'),
 env.globals['clever'] = clever
 
 
-def get_docstring(filename):
+def get_docstring(filename, verbose=False):
     """
     Search for assignment of the DOCUMENTATION variable in the given file.
     Parse that from YAML and return the YAML doc or None.
@@ -96,7 +128,9 @@ def get_docstring(filename):
                 if 'DOCUMENTATION' in (t.id for t in child.targets):
                     doc = yaml.load(child.value.s)
     except:
-        raise
+        if verbose:
+            raise
+        pass
     return doc
 
 def main():
@@ -111,7 +145,7 @@ def main():
     p.add_argument("-t", "--type",
             action='store',
             dest='type',
-            choices=['html', 'latex', 'manpage'],
+            choices=['html', 'latex', 'man'],
             default='latex',
             help="Output type")
     p.add_argument("-m", "--module",
@@ -128,6 +162,11 @@ def main():
             dest="output_dir",
             default=None,
             help="Output directory for module files")
+    p.add_argument("-G", "--generate",
+            action="store_true",
+            dest="do_boilerplate",
+            default=False,
+            help="generate boilerplate DOCUMENTATION to stdout")
     p.add_argument('-V', '--version', action='version', version='%(prog)s 1.0')
 
     module_dir = None
@@ -137,6 +176,10 @@ def main():
     # print "t: %s" % args.type
     # print "m: %s" % args.module_list
     # print "v: %s" % args.verbose
+
+    if args.do_boilerplate:
+        boilerplate()
+        sys.exit(0)
 
     if not args.module_dir:
         print "Need module_dir"
@@ -150,9 +193,9 @@ def main():
         env.filters['jpfunc'] = html_ify
         template = env.get_template('html.j2')
         outputname = "%s.html"
-    if args.type == 'manpage':
-        env.filters['jpfunc'] = manpage_ify
-        template = env.get_template('manpage.j2')
+    if args.type == 'man':
+        env.filters['jpfunc'] = man_ify
+        template = env.get_template('man.j2')
         outputname = "%s.man"
 
     for module in os.listdir(args.module_dir):
@@ -166,12 +209,12 @@ def main():
         # FIXME: html/manpage/latex
         print "%% modules2.py ---> %s" % fname
 
-        doc = get_docstring(fname)
+        doc = get_docstring(fname, verbose=args.verbose)
         if not doc is None:
             
             doc['filename'] = fname
             doc['docuri'] = doc['module'].replace('_', '-')
-            doc['now_date']     = datetime.date.today()
+            doc['now_date']     = datetime.date.today().strftime('%Y-%m-%d')
 
             if args.verbose:
                 print json.dumps(doc, indent=4)
@@ -191,6 +234,34 @@ def main():
                 f.close()
             else:
                 print text
+
+def boilerplate():
+
+    # Sneaky: insert author's name from Git config
+
+    cmd = subprocess.Popen("git config --get user.name", shell=True, 
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    out, err = cmd.communicate()
+
+    if len(out.split('\n')) == 2:
+        author = out.split('\n')[0]
+        print author
+    else:
+        author = "Your Name"
+
+    # I can't dump YAML in ordered fasion, so I use this boilerplate string
+    # and verify it is parseable just before printing it out to the user.
+
+    try:
+        boilplate = yaml.load(BOILERPLATE)
+    except:
+        print "Something is wrong with the BOILERPLATE"
+        sys.exit(1)
+
+    print """
+DOCUMENTATION = '''
+%s
+"""[1:-1] % (BOILERPLATE.replace('AUTHORNAME', author) [1:-1] )
 
 if __name__ == '__main__':
     main()

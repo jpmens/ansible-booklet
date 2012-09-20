@@ -54,6 +54,11 @@
 .fi
 {% endfor -%}
 {% endif -%}
+." ------- AUTHOR
+{% if author is defined -%}
+.SH AUTHOR
+@{ author }@
+{% endif -%}
 .SH SEE ALSO
 .IR ansible (1),
 .I http://ansible.github.com/modules.html#@{docuri}@

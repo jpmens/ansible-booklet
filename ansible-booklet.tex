@@ -449,6 +449,16 @@ http://ansible.github.com/examples.html\#configuration-defaults
 	\end{extymeta}
 
     \item[3.]
+    	
+	Some Linux distributions come with broken init scripts which prevent the \M{service}
+	module from completing. If that happens to you, you might want to try using
+	the \M{shell} module with the following command:
+
+	\begin{extymeta}
+	setsid bash -c '(/etc/init.d/xxxx start) & disown \%\%'
+	\end{extymeta}
+
+    \item[4.]
     	Other "hidden" ansible variables FIXME
 
 \end{enumerate}
