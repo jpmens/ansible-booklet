@@ -32,6 +32,8 @@ or more \I{plays} in a list. Here's a playbook that contains just one play:
       action: service name=apache state=restarted
 \end{extymeta}
 
+(You can omit a task's \I{name} if you ensure the task's \I{action} becomes the key.)
+
 \begin{extymeta}
 ansible-playbook -u jpm mini.yaml
 \end{extymeta}
