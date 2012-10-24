@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# Clean up files created by module_formatter.py, escaping special
+# LaTeX characters.
+
+SRCDIR=modules/ltx
+DEST=modules
+
+cp /dev/null $DEST/_list.tex
+
+cat $SRCDIR/_list | while read fname
+do
+	sed -e 's/\$/\\$/g' < $SRCDIR/${fname}.tex |
+	sed -e 's/_/\\_/g' |
+	sed -e 's/#/\\#/g' |
+	sed -e 's/&/\\&/g' > $DEST/${fname}.tex
+	echo "\\input ${DEST}/${fname}.tex" >> ${DEST}/_list.tex
+done

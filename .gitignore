@@ -1,3 +1,7 @@
 *.aux
 *.log
 *.out
+modules/_list.tex
+modules/*.tex
+modules/ltx/*.tex
+modules/ltx/_list

@@ -4,20 +4,9 @@
 
 A **preview** of the booklet is [here](https://github.com/downloads/jpmens/ansible-booklet/ansible-booklet.pdf).
 
-## mofo
+## module_formatter
 
-The MOdule FOrmatter. :-)
-
-### Create man pages
-
-* Of a single module
-
-		./mofo -t manpage -m get_url
-
-* Of all modules, in `directory/*.man`
-
-		./mofo -t manpage -o directory
-
+This is now part of Ansible.
 
 ## Credits
 

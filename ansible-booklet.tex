@@ -122,6 +122,7 @@
 \newcommand{\I}[1]{\textit{#1}}%
 \newcommand{\B}[1]{\textbf{#1}}%
 \newcommand{\C}[1]{\texttt{#1}}%
+%\newcommand{\C}[1]{\relsize{-0.5}#1}%
 \usepackage{color}
 \newcommand{\M}[1]{\C{#1}}
 \newcommand{\master}{\I{master}}%
@@ -207,7 +208,7 @@
  \chead[]{}
  \ohead[]{\small\C{\{"pushed"\,:\,"\today{}"\}}}
 %%% Unten: Links, Mitte, Rechts
- \ifoot[]{\vspace{-3pt}\href{http://ansible.github.com/}{ansible.github.com}}
+ \ifoot[]{\vspace{-3pt}\href{http://ansible.cc/}{ansible.cc}}
  \cfoot[]{}
  \ofoot[]{\vspace{-3pt}\copyright 2012 \href{mailto:jpmens@gmail.com}{Jan-Piet Mens}}
 %%% }}}
@@ -353,7 +354,7 @@ ansible webs -m \B{copy} -a "src=/tmp/f dest=/etc/conf"
 
 %-----------------------------------------------------------------------
 
-\input{modules}
+\input{modules/_list}
 
 %-----------------------------------------------------------------------
 \input{playbooks}
